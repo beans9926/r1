@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <raylib.h>
 #include "game.h"
 
 int screenHeight = (float) GetScreenHeight();
@@ -9,6 +10,10 @@ Vector2 mousePosition = {0, 0};
 Vector2 v0 = { (float)screenWidth, (float)screenHeight };
 
 float startAngle = 0.0f;
+
+bool printDebug = false;
+
+Font debugFont;
 
 struct PlayerTriangleOrigin{
 	Vector2 velocity = {0.0, 0.0};
@@ -70,7 +75,10 @@ int main(int argc, char* argv[]){
 	ToggleBorderlessWindowed();
 	std::cout << "\nGAME-INFO: set fps, set window";
 	InitWindow(screenWidth, screenHeight, "window");
-
+	
+	debugFont = LoadFont("resources/0xProtoNerdFontMono-Regular.ttf");
+	std::cout << GetWorkingDirectory() << std::endl;
+	
 	Texture2D playerTexture = LoadTexture("resources/player.png");
 	int frameWidth = playerTexture.width;
 	int frameHeight = playerTexture.height;
@@ -89,7 +97,7 @@ int main(int argc, char* argv[]){
 		mousePosition = GetMousePosition();
 		
 		checkMovementInput(&player);
-				
+		
 		player.p1.x += player.velocity.x;
 		player.p1.y += player.velocity.y;
 		
@@ -118,11 +126,26 @@ int main(int argc, char* argv[]){
 		Rectangle sourceRec = {0.0f, 0.0f, (float)frameWidth, (float)frameHeight};
 		Rectangle destRec = {player.p2.x - 25, player.p2.y, 50, 61};
 
+		if(IsKeyPressed(KEY_I)){
+			if(printDebug == false){ printDebug = true; }
+			else if(printDebug == true){ printDebug = false; }
+		}
+
 		BeginDrawing();
 		ClearBackground(BLACK);
 		
 		DrawTexturePro(playerTexture, sourceRec, Rectangle{player.p2.x, player.p2.y, 50, 61}, Vector2{25, 0}, angle, WHITE);
 		
+		if(printDebug == true){
+			DrawTextEx(debugFont ,TextFormat("mouse position  : %.2f, %.2f",
+																		mousePosition.x, mousePosition.y), 
+							Vector2{10, 0}, 20, 2, GRAY);
+			DrawTextEx(debugFont, TextFormat("player position : %.2f, %.2f", 
+																		player.p1.x, player.p1.y), 
+						Vector2{10, 15}, 20, 2, GRAY);
+			DrawCircle(player.p2.x, player.p2.y, 3, DARKBLUE);
+			DrawCircle(player.p1.x, player.p1.y, 3, BLUE);
+		}
 		{
 			//debug rendering
 			//DrawCircle(player.p2.x, player.p2.y, 2, GREEN);
@@ -133,7 +156,7 @@ int main(int argc, char* argv[]){
 			//DrawRectangleLines(destRec.x, destRec.y, destRec.width, destRec.height, RED);
 			
 			if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
-				DrawCircleV(mousePosition, 20, GRAY);
+				DrawCircleV(mousePosition, 10, GRAY);
 			}
 		}
 		
