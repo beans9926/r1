@@ -24,7 +24,15 @@ struct PlayerTriangle {
 	Rectangle destRec;
 
 
-	void updatePlayerPos(PlayerTriangle* player, int *screenWidth, int *screenHeight, int *frameWidth, int *frameHeight);
+	void updatePlayerPos(PlayerTriangle* player, 
+											int *screenWidth, 
+											int *screenHeight, 
+											int *frameWidth, 
+											int *frameHeight);
 
-	void DrawPlayer(Texture2D* playerTexture, PlayerTriangle* player, Rectangle* sourceRec, Rectangle* destRec, float* angle);
+	void DrawPlayer(Texture2D* playerTexture, 
+								 PlayerTriangle* player, 
+								 Rectangle* sourceRec, 
+								 Rectangle* destRec, 
+								 float* angle);
 };

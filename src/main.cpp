@@ -1,8 +1,5 @@
 #include <iostream>
-#include <cmath>
-#include <raylib.h>
 #include "game.h"
-#include "playerTriangle.h"
 
 int screenHeight = (float) GetScreenHeight();
 int screenWidth = (float) GetScreenWidth();
@@ -116,7 +113,7 @@ int main(int argc, char* argv[]){
 		}
 		
 		//DrawCircleV(mousePosition, 10, GREEN);
-		DrawCrosshair(player.mousePosition);
+		DrawCrosshair(&player.mousePosition);
 
 
 		EndDrawing();

@@ -4,7 +4,5 @@
 #include <cmath>
 
 #include "playerTriangle.h"
+#include "crosshair.h"
 
-//Vector2 mousePosition = {0, 0};
-
-void DrawCrosshair(Vector2);
