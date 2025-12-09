@@ -2,12 +2,11 @@
 #include <cmath>
 #include <raylib.h>
 #include "game.h"
+#include "playerTriangle.h"
 
 int screenHeight = (float) GetScreenHeight();
 int screenWidth = (float) GetScreenWidth();
 
-Vector2 mousePosition = {0, 0};
-Vector2 v0 = { (float)screenWidth, (float)screenHeight };
 
 float startAngle = 0.0f;
 
@@ -22,24 +21,7 @@ struct PlayerTriangleOrigin{
 };
 PlayerTriangleOrigin obj_playerTriangleOrigin;
 
-struct PlayerTriangle {
-	Vector2 velocity = {0.0, 0.0};
-	Vector2 acceleration = {0.0, 0.0};
-	Vector2 p1 = {300, 300};
-	Vector2 p3 = mousePosition; 
-	float len_p1_p3 = sqrt(std::pow((p3.x - p1.x), 2) + 
-												std::pow((p3.y - p1.y), 2));
-	float k_len_p1_p3 = 50 / len_p1_p3;
 
-	Vector2 p2 = {
-		(p1.x + (k_len_p1_p3 * (p3.x - p1.x))),
-		(p1.y + (k_len_p1_p3 * (p3.y - p1.y)))
-	};
-
-	float deltaX = p2.x - p1.x;
-	float deltaY = p2.y - p1.y;
-
-};
 
 
 void checkMovementInput(PlayerTriangle* player){
@@ -94,54 +76,27 @@ int main(int argc, char* argv[]){
 	
 		++frameCount;
 
-		mousePosition = GetMousePosition();
+		player.mousePosition = GetMousePosition();
 		
 		checkMovementInput(&player);
-		
-		player.p1.x += player.velocity.x;
-		player.p1.y += player.velocity.y;
-		
-		player.p3 = mousePosition;
-		player.len_p1_p3 = sqrt(std::pow((player.p3.x - player.p1.x), 2) + 
-												std::pow((player.p3.y - player.p1.y), 2));
-		player.k_len_p1_p3 = 50/player.len_p1_p3;
-		player.p2 = {
-			(player.p1.x + (player.k_len_p1_p3 * (player.p3.x - player.p1.x))),
-			(player.p1.y + (player.k_len_p1_p3 * (player.p3.y - player.p1.y)))
-		};
-		player.deltaX = player.p2.x - player.p1.x;
-		player.deltaY = player.p2.y - player.p1.y;
-
-		
-		
-		Rectangle playerTexRenderBounds = {player.p2.x, player.p2.y, 50, 100};
-
-		Vector2 v1Normal = Vector2Normalize(Vector2Subtract(player.p1, v0));
-		Vector2 v2Normal = Vector2Normalize(Vector2Subtract(player.p2, v0));
-
+		Rectangle sourceRec = {0.0f, 0.0f, (float)frameWidth, (float)frameHeight};
+		Rectangle destRec = {player.p2.x - 25, player.p2.y, 50, 61};
 		Vector2 dir = Vector2Subtract(player.p3, player.p2);
 		float angle = (atan2f(dir.y, dir.x) * RAD2DEG) + 90;
 
-		
-		Rectangle sourceRec = {0.0f, 0.0f, (float)frameWidth, (float)frameHeight};
-		Rectangle destRec = {player.p2.x - 25, player.p2.y, 50, 61};
-
-		if(IsKeyPressed(KEY_I)){
+		player.updatePlayerPos(&player, &screenWidth, &screenHeight, &frameWidth, &frameHeight);
+				if(IsKeyPressed(KEY_I)){
 			if(printDebug == false){ printDebug = true; }
 			else if(printDebug == true){ printDebug = false; }
 		}
 
 		BeginDrawing();
 		ClearBackground(BLACK);
-		
-		DrawTexturePro(playerTexture, sourceRec, Rectangle{player.p2.x, player.p2.y, 50, 61}, Vector2{25, 0}, angle, WHITE);
-		
-		if(printDebug == true){
-			DrawTextEx(debugFont ,TextFormat("mouse position  : %.2f, %.2f",
-																		mousePosition.x, mousePosition.y), 
-							Vector2{10, 0}, 20, 2, GRAY);
-			DrawTextEx(debugFont, TextFormat("player position : %.2f, %.2f", 
-																		player.p1.x, player.p1.y), 
+		player.DrawPlayer(&playerTexture, &player, &sourceRec, &destRec, &angle);
+				if(printDebug == true){
+			DrawTextEx(debugFont ,TextFormat("mouse position: %.2f, %.2f",player.mousePosition.x, player.mousePosition.y), 
+						Vector2{10, 0}, 20, 2, GRAY);
+			DrawTextEx(debugFont, TextFormat("player position: %.2f, %.2f", player.p1.x, player.p1.y), 
 						Vector2{10, 15}, 20, 2, GRAY);
 			DrawCircle(player.p2.x, player.p2.y, 3, DARKBLUE);
 			DrawCircle(player.p1.x, player.p1.y, 3, BLUE);
@@ -156,12 +111,12 @@ int main(int argc, char* argv[]){
 			//DrawRectangleLines(destRec.x, destRec.y, destRec.width, destRec.height, RED);
 			
 			if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
-				DrawCircleV(mousePosition, 10, GRAY);
+				DrawCircleV(player.mousePosition, 20, GRAY);
 			}
 		}
 		
 		//DrawCircleV(mousePosition, 10, GREEN);
-		DrawCrosshair(mousePosition);
+		DrawCrosshair(player.mousePosition);
 
 
 		EndDrawing();
