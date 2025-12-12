@@ -1,5 +1,6 @@
 #pragma once
-#include "game.h"
+//#include "game.h"
+#include "rayImports.h"
 
 struct PlayerTriangle {
 	Vector2 velocity = {0.0, 0.0};

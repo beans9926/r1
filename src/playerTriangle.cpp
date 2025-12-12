@@ -25,8 +25,8 @@ void PlayerTriangle::updatePlayerPos(PlayerTriangle* player,
 	Rectangle playerTexRenderBounds = {player->p2.x, player->p2.y, 50, 100};
 
 	Vector2 v0 = { (float)*screenWidth, (float)*screenHeight };
-	Vector2 v1Normal = Vector2Normalize(Vector2Subtract(player->p1, v0));
-	Vector2 v2Normal = Vector2Normalize(Vector2Subtract(player->p2, v0));
+	//Vector2 v1Normal = Vector2Normalize(Vector2Subtract(player->p1, v0));
+	//Vector2 v2Normal = Vector2Normalize(Vector2Subtract(player->p2, v0));
 
 }
 

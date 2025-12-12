@@ -21,32 +21,7 @@ PlayerTriangleOrigin obj_playerTriangleOrigin;
 
 
 
-void checkMovementInput(PlayerTriangle* player){
-	if(IsKeyDown(KEY_W)){
-			player->velocity.y -= player->acceleration.y;
-			if(player->acceleration.y < 0.15){player->acceleration.y += 0.01;}
-		}
-		if(IsKeyReleased(KEY_W)){player->acceleration.y = 0.01;}
 
-		if(IsKeyDown(KEY_S)){
-			player->velocity.y += player->acceleration.y;
-			if(player->acceleration.y < 0.15){player->acceleration.y += 0.01;}
-		}
-		if(IsKeyReleased(KEY_S)){player->acceleration.y = 0.01;}
-
-		if(IsKeyDown(KEY_A)){
-			player->velocity.x -= player->acceleration.x;
-			if(player->acceleration.x < 0.15){player->acceleration.x += 0.01;}
-		}
-		if(IsKeyReleased(KEY_A)){player->acceleration.x = 0.01;}
-		
-		if(IsKeyDown(KEY_D)){
-			player->velocity.x += player->acceleration.x;
-			if(player->acceleration.x < 0.15){player->acceleration.x += 0.01;}
-		}
-		if(IsKeyReleased(KEY_D)){player->acceleration.x = 0.01;}
-
-}
 
 
 int main(int argc, char* argv[]){
@@ -90,11 +65,20 @@ int main(int argc, char* argv[]){
 		BeginDrawing();
 		ClearBackground(BLACK);
 		player.DrawPlayer(&playerTexture, &player, &sourceRec, &destRec, &angle);
-				if(printDebug == true){
-			DrawTextEx(debugFont ,TextFormat("mouse position: %.2f, %.2f",player.mousePosition.x, player.mousePosition.y), 
-						Vector2{10, 0}, 20, 2, GRAY);
-			DrawTextEx(debugFont, TextFormat("player position: %.2f, %.2f", player.p1.x, player.p1.y), 
-						Vector2{10, 15}, 20, 2, GRAY);
+		
+		if(printDebug == true){
+			DrawTextEx(debugFont,
+							TextFormat("mouse position: %.2f, %.2f",
+							player.mousePosition.x, 
+							player.mousePosition.y), 
+							Vector2{10, 0}, 20, 2, GRAY);
+			
+			DrawTextEx(debugFont, 
+							TextFormat("player position: %.2f, %.2f", 
+							player.p1.x, 
+							player.p1.y), 
+							Vector2{10, 15}, 20, 2, GRAY);
+			
 			DrawCircle(player.p2.x, player.p2.y, 3, DARKBLUE);
 			DrawCircle(player.p1.x, player.p1.y, 3, BLUE);
 		}
