@@ -26,5 +26,5 @@ struct PlayerTriangle {
                        int *screenHeight, int *frameWidth, int *frameHeight);
 
   void DrawPlayer(Texture2D *playerTexture, PlayerTriangle *player,
-                  Rectangle *sourceRec, Rectangle *destRec, float *angle);
+                  Rectangle *sourceRec, float *angle);
 };

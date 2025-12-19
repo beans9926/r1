@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
 
     checkMovementInput(&player);
     Rectangle sourceRec = {0.0f, 0.0f, (float)frameWidth, (float)frameHeight};
-    Rectangle destRec = {player.p1.x - 25, player.p1.y, 50.0f, 61.0f};
+    // Rectangle destRec = {player.p1.x, player.p1.y, 50.0f, 61.0f};
     Vector2 dir = Vector2Subtract(player.p3, player.p2);
     float angle = (atan2f(dir.y, dir.x) * RAD2DEG) + 90;
 
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
 
     BeginDrawing();
     ClearBackground(BLACK);
-    player.DrawPlayer(&playerTexture, &player, &sourceRec, &destRec, &angle);
+    player.DrawPlayer(&playerTexture, &player, &sourceRec, &angle);
 
     if (printDebug == true) {
       DrawTextEx(debugFont,
@@ -77,7 +77,6 @@ int main(int argc, char *argv[]) {
           TextFormat("player position: %.2f, %.2f", player.p1.x, player.p1.y),
           Vector2{10, 15}, 20, 2, GRAY);
 
-      DrawCircle(player.p2.x, player.p2.y, 3, DARKBLUE);
       DrawCircle(player.p1.x, player.p1.y, 3, BLUE);
     }
     {
