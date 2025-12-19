@@ -46,9 +46,6 @@ int main(int argc, char *argv[]) {
 
     checkMovementInput(&player);
     Rectangle sourceRec = {0.0f, 0.0f, (float)frameWidth, (float)frameHeight};
-    // Rectangle destRec = {player.p1.x, player.p1.y, 50.0f, 61.0f};
-    Vector2 dir = Vector2Subtract(player.p3, player.p2);
-    float angle = (atan2f(dir.y, dir.x) * RAD2DEG) + 90;
 
     player.updatePlayerPos(&player, &screenWidth, &screenHeight, &frameWidth,
                            &frameHeight);
@@ -62,25 +59,11 @@ int main(int argc, char *argv[]) {
 
     BeginDrawing();
     ClearBackground(BLACK);
-    player.DrawPlayer(&playerTexture, &player, &sourceRec, &angle);
+    player.DrawPlayer(&playerTexture, &player, &sourceRec);
 
     if (printDebug == true) {
 
       DrawDebugInfo(&player);
-    }
-    {
-      // debug rendering
-      // DrawCircle(player.p2.x, player.p2.y, 2, GREEN);
-      // DrawLine(player.p2.x, player.p2.y, player.p3.x, player.p3.y, BLUE);
-
-      // drawing the rectangle bounds
-      // DrawRectangleLines(player.p2.x - 25, player.p2.y, 50, 61, WHITE);
-      // DrawRectangleLines(destRec.x, destRec.y, destRec.width, destRec.height,
-      // RED);
-
-      if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-        DrawCircleV(player.mousePosition, 20, GRAY);
-      }
     }
 
     // DrawCircleV(mousePosition, 10, GREEN);

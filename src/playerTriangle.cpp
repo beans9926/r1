@@ -14,8 +14,7 @@ void PlayerTriangle::updatePlayerPos(PlayerTriangle *player, int *screenWidth,
 }
 
 void PlayerTriangle::DrawPlayer(Texture2D *playerTexture,
-                                PlayerTriangle *player, Rectangle *sourceRec,
-                                float *angle) {
+                                PlayerTriangle *player, Rectangle *sourceRec) {
   Vector2 origin = {25.0f, 30.5f};
   DrawTexturePro(*playerTexture, *sourceRec,
                  Rectangle{player->p1.x, player->p1.y, 50, 61},

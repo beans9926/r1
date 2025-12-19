@@ -1,5 +1,5 @@
 #include "playerTriangle.h"
-#include "rayImports.h"
+#include <raylib.h>
 
 void DrawDebugInfo(PlayerTriangle *player) {
 
@@ -17,4 +17,8 @@ void DrawDebugInfo(PlayerTriangle *player) {
       Vector2{10, 15}, 20, 2, GRAY);
 
   DrawCircle(player->p1.x, player->p1.y, 3, BLUE);
+
+  if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+    DrawCircleV(player->mousePosition, 20, GRAY);
+  }
 }

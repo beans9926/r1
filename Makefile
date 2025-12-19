@@ -6,9 +6,9 @@ RAYLIB=-lraylib
 CPPFILES=src/*.cpp
 OBJECTS=obj/*.o
 
-BINARY=bin/game
+BINARY=bin/r1
 
-game: $(CPPFILES)
+r1: $(CPPFILES)
 	$(CC) $(CPPFILES) $(RAYLIB) -o $(BINARY)
 
 
