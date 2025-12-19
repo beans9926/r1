@@ -1,6 +1,7 @@
 #include <iostream>
 // #include "game.h"
 #include "crosshair.h"
+#include "drawDebugInfo.h"
 #include "movementInput.h"
 #include "playerTriangle.h"
 
@@ -10,8 +11,6 @@ int screenWidth = (float)GetScreenWidth();
 float startAngle = 0.0f;
 
 bool printDebug = false;
-
-Font debugFont;
 
 struct PlayerTriangleOrigin {
   Vector2 velocity = {0.0, 0.0};
@@ -26,7 +25,6 @@ int main(int argc, char *argv[]) {
   std::cout << "\nGAME-INFO: set fps, set window";
   InitWindow(screenWidth, screenHeight, "window");
 
-  debugFont = LoadFont("resources/0xProtoNerdFontMono-Regular.ttf");
   std::cout << GetWorkingDirectory() << std::endl;
 
   Texture2D playerTexture = LoadTexture("resources/player.png");
@@ -67,17 +65,8 @@ int main(int argc, char *argv[]) {
     player.DrawPlayer(&playerTexture, &player, &sourceRec, &angle);
 
     if (printDebug == true) {
-      DrawTextEx(debugFont,
-                 TextFormat("mouse position: %.2f, %.2f",
-                            player.mousePosition.x, player.mousePosition.y),
-                 Vector2{10, 0}, 20, 2, GRAY);
 
-      DrawTextEx(
-          debugFont,
-          TextFormat("player position: %.2f, %.2f", player.p1.x, player.p1.y),
-          Vector2{10, 15}, 20, 2, GRAY);
-
-      DrawCircle(player.p1.x, player.p1.y, 3, BLUE);
+      DrawDebugInfo(&player);
     }
     {
       // debug rendering
