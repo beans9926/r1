@@ -1,5 +1,5 @@
 #pragma once
+#include "playerTriangle.h"
 #include "rayImports.h"
-#include "game.h"
 
-void checkMovementInput(PlayerTriangle* player);
+void checkMovementInput(PlayerTriangle *player);

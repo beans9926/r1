@@ -1,4 +1,4 @@
 #pragma once
-#include "game.h"
+#include "rayImports.h"
 
-void DrawCrosshair(Vector2* mousePosition);
+void DrawCrosshair(Vector2 *mousePosition);
