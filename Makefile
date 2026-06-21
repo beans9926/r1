@@ -1,15 +1,16 @@
 CC=g++
-INCDIRS=-I.
+INCDIRS=-I. -Iinclude
+LIBDIRS=-Llib
 OPT=-O0
 FLAGS=-Wall -Wextra -g $(INCDIRS) $(OPT)
-RAYLIB=-lraylib
+RAYLIB=-lraylib -lopengl32 -lgdi32 -lwinmm
 CPPFILES=src/*.cpp
-OBJECTS=obj/*.o
 
 BINARY=bin/r1
 
 r1: $(CPPFILES)
-	$(CC) $(CPPFILES) $(RAYLIB) -o $(BINARY)
+	mkdir -p bin
+	$(CC) $(FLAGS) $(CPPFILES) $(LIBDIRS) $(RAYLIB) -o $(BINARY)
 
 
 clean:
